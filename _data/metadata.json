@@ -1,0 +1,20 @@
+{
+  "title": "Gorille gris",
+  "url": "https://ptitgraig.github.io/",
+  "description": "I share my knowledge about web development and christian faith.",
+  "feed": {
+    "subtitle": "I share my knowledge about web development and christian faith.",
+    "filename": "feed.xml",
+    "path": "/feed/feed.xml",
+    "id": "https://example.com/"
+  },
+  "jsonfeed": {
+    "path": "/feed/feed.json",
+    "url": "https://ptitgraig.github.io/feed/feed.json"
+  },
+  "author": {
+    "name": "Grégory Pelletey",
+    "email": "gregory.pelletey@gmail.com",
+    "url": "https://ptitgraig.github.io/about-me/"
+  }
+}

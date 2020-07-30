@@ -1,19 +1,21 @@
 ---
 layout: layouts/post.njk
-title: About Me
+title: A Propos
 templateClass: tmpl-post
 eleventyNavigation:
-  key: About
+  key: à propos
   order: 3
 ---
 
+![Grégory Pelletey](/img/avatar.jpg){.rounded .center .img150}
+
 ## L'auteur
 
-![Grégory Pelletey](/img/avatar.jpg) Je m'apelle Grégory Pelletey et suis développeur front-end/PHP, exercant à Paris.
+ Je m'apelle Grégory Pelletey et suis développeur JavaScript, exercant à Paris.
 Je suis également (et surtout) un chrétien engagé. Ma foi à un impact fort dans tous les domaines de ma vie (y compris professionnel).
 A quoi définit-on un chrétien ? Je citerai l'épître aux Romains dans la Bible :
-> l'apôtre Paul, La Bible, Epîtres aux Romains, chapitre 10 versets 8 à 10 %}
-Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton coeur que Dieu l'a ressuscité des morts, tu seras sauvé.
+l'apôtre Paul, La Bible, Epîtres aux Romains, chapitre 10 versets 8 à 10
+> Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton coeur que Dieu l'a ressuscité des morts, tu seras sauvé.
 Car c'est en croyant du coeur qu'on parvient à la justice, et c'est en confessant de la bouche qu'on parvient au salut,
 selon ce que dit l'Ecriture : Quiconque croit en lui ne sera point confus.
 

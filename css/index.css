@@ -320,7 +320,23 @@ a[href].direct-link:focus:visited,
   height: 100px;
 }
 
+.img150 {
+  width: 150px;
+  height: 150px;
+}
+
+.rounded {
+  border-radius: 100%;
+}
+
+
 .float-left-20px {
   float: left;
   margin-right : 20px;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }

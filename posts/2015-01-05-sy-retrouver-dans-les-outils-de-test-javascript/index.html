@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&#39;y retrouver dans les outils de test Javascript</title>
+    <meta name="description" content="I share my knowledge about web development and christian faith.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Gorille gris">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Gorille gris">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Gorille gris</a></h1>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="/">posts</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about/">à propos</a>
+        </li>
+      </ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>S&#39;y retrouver dans les outils de test Javascript</h1>
+
+<p class="foreword">
+Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
+Cet article sera enrichi au fur et à mesure des mes connaissances sur les sujets.
+</p>
+<!-- more -->
+<h2 id="d%C3%A9finitions">Définitions <a class="direct-link" href="#d%C3%A9finitions">#</a></h2>
+<h3 id="test-driven-development-(tdd)">Test-Driven Development (TDD) <a class="direct-link" href="#test-driven-development-(tdd)">#</a></h3>
+<p>Le Test Driven Development (TDD) ou en français développement piloté par les tests est une technique de développement de logiciel qui préconise d’écrire les tests unitaires avant d’écrire le code source d’un logiciel <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>.</p>
+<p>Le cycle préconisé par TDD comporte 5 étapes :</p>
+<ol>
+<li>écrire un premier test;</li>
+<li>vérifier qu’il échoue (car le code qu’il teste n’existe pas), afin de vérifier que le test est valide;</li>
+<li>écrire juste le code suffisant pour passer le test;</li>
+<li>vérifier que le test passe;</li>
+<li>puis refactoriser le code.</li>
+</ol>
+<p>Les intérêts :</p>
+<ul>
+<li>facilite la production de code valide en toutes circonstances</li>
+<li>on utilise le programme avant même qu’il existe</li>
+<li>évite des erreurs de conceptions dues à la précipitation avant d’avoir défini les objectifs</li>
+<li>plus grande assurance lors du refactoring, tu sais que les tests ont fonctionné à un moment donné. Tu peux ainsi te permettre des changements radicaux dans le code</li>
+</ul>
+<p>Une chose importante est que les demandeurs doivent formaliser la manière dont ils testeront la fonctionnalité. C’est le travail du responsable applicatif de s’en assurer.</p>
+<h3 id="behavior-driven-development-(bdd)">Behavior-Driven Development (BDD) <a class="direct-link" href="#behavior-driven-development-(bdd)">#</a></h3>
+<p>Behavior Driven Development (ou BDD) est une méthode Agile qui encourage la collaboration entre les développeurs, les responsables qualités, les intervenants non-techniques et les entreprises participant à un projet de logiciel. Il a été conçu en 2003 par Dan North comme une réponse au Test Driven Development. <sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<p>Le processus BDD met en avant le langage naturel et les interactions dans le processus de développement logiciel. Les développeurs utilisant le BDD utilisent leur langue maternelle en combinaison avec le langage du domaine Domaine Driven Design pour décrire l’objectif et le bénéfice de leur code. Cela permet aux développeurs de se concentrer sur les raisons pour lesquelles le code doit être créé, plutôt que les détails techniques, et minimise la traduction entre le langage technique dans lequel le code est écrit et le domaine de la langue parlée par les entreprises, les utilisateurs, les intervenants, la gestion de projet etc…</p>
+<p>Dans la pratique :</p>
+<ul>
+<li>on utilise des exemples pour décrire le comportement de la demande;</li>
+<li>on automatise ces exemples pour fournir rapidement des commentaires ou tests de non-regression;</li>
+<li>on utilise le mot ‘devrait’, ce qui contribue à clarifier la résponsabilité et permet la remise en cause de la fonctionnalité de l’application;</li>
+<li>on utilise ‘verifier que’, ce qui permet de faire la différence entre les résultats provenant du champ d’application du code et d’autres éléments du code;</li>
+<li>on utilise des ‘mocks’ (fausse fonction) en remplacant des modules de code qui ne sont pas encore écrits.</li>
+</ul>
+<h3 id="les-bibliot%C3%A8ques-d%E2%80%99%C3%A9nonc%C3%A9s-(assertions-library)">Les bibliotèques d’énoncés (assertions library) <a class="direct-link" href="#les-bibliot%C3%A8ques-d%E2%80%99%C3%A9nonc%C3%A9s-(assertions-library)">#</a></h3>
+<p>Une assertion est un énoncé considéré comme vrai. Les bibliothèques d’énoncés permettent de formuler les tests de manière compréhensible.<br>
+Quelques bibliothèques d’énoncés :</p>
+<ul>
+<li>should.js</li>
+<li>expect.js</li>
+<li>chai.js</li>
+</ul>
+<h3 id="les-frameworks-de-test">Les frameworks de test <a class="direct-link" href="#les-frameworks-de-test">#</a></h3>
+<p>Un framework de test engloble une ou plusieurs bibliothèques d’énoncés, permet de lancer des tests.</p>
+<p>A compléter…</p>
+<h2 id="les-outils">Les outils <a class="direct-link" href="#les-outils">#</a></h2>
+<h3 id="jasmine">Jasmine <a class="direct-link" href="#jasmine">#</a></h3>
+<p><img src="/img/test-jasmine.png" alt="Jasmine" class="img100 float-left-20px"> Jasmine est un <em>framework de test</em> JavaScript developpement orienté comportement (BDD). Il ne dépend d’aucun autre framework JavaScript.<br>
+Il ne requiert pas un DOM et possède une syntaxe propre et évidente, ce qui permet d’écrire facilement tes tests.</p>
+<h3 id="mocha">Mocha <a class="direct-link" href="#mocha">#</a></h3>
+<p><img src="/img/test-mocha.png" alt="Mocha" class="img100 float-left-20px"> Mocha est un <em>framework de test</em> JavaScript riche en fonctionnalités, basé sur Node.js et sur le navigateur, qui rend les tests asynchrones simple et agréable. Les tests Mocha se déroulent de manière séquentielle, ce qui permet d’établir un rapporte précis et flexible, tout en faisant concorder les exceptions non interceptées au bon cas de test.</p>
+<h3 id="karma-(anciennement-testacular)">Karma (anciennement Testacular) <a class="direct-link" href="#karma-(anciennement-testacular)">#</a></h3>
+<p><img src="/img/test-karma.png" alt="Karma" class="img100 float-left-20px"> Karma est un <em>environnement de test</em>. Le but principal de Karma est d’offrir aux développeurs un environnement de test productif. Plutôt que de demander de mettre en place tout un tas de configurations, Karma te permet d’écire le code est d’obtenir un retour instantané de tes tests. La philosphie de Karma est : une retour rapide sur ton code, c’est ce qui te rend productif et créatif. C’est une opinion.</p>
+<p>Karma est essentiellement un outil qui génère un serveur Web qui exécute le code source en se basant sur le code de test, et ce pour chaque navigateurs connectés. Les résultats de chaque test contre sur chaque navigateur sont calculées et affichées sur la ligne de commande de telle sorte que tu puisses voir quels sont les tests qui ont réussis et échoués, et ce sur chaque navigateur.<br>
+Tu peux tester le résulat sur un navigateur soit manuellement, en visitant l’URL écoutée par le serveur Karma (habituellement <a href="http://localhost:9876/">http://localhost:9876/</a>), soit<br>
+automatiquement en configurant Karma de sorte qu’il sache quel navigateur démarrer quand Karma est exécuté.</p>
+<p>Karma surveille aussi tous les fichiers listés dans le fichier de configuration. Dès qu’un fichier change, Karma déclenche les tests en envoyant un signal<br>
+au serveur de test pour informer tout les navigayeurs connectés d’executer le code de test à nouveau. Chaque navigateur charge ensuite le code source dans une IFrame, exécute les tests, et rapporte les résultats au serveur.<br>
+Le serveur collecte les résultats de l’ensemble des navigateurs connectés et te les présente.</p>
+<h3 id="intern">Intern <a class="direct-link" href="#intern">#</a></h3>
+<p><img src="/img/test-intern.png" alt="Intern" class="img100 float-left-20px"> Intern est <em>une pile de test complète pour Javascript</em>, conçue pour t’aider à écrire et exécuter des cas de test, pour applications et biblothèques de scripts, cohérent et de haute qualité. Intern peut être utilisé pour tester n’importe quel code JavaScript. Ses capacités de test fonctionnel peuvent même être utilisé pour tester des applications mobile et web non JavaScript - si tu le veux vraiment.</p>
+<h3 id="sinon.js">sinon.js <a class="direct-link" href="#sinon.js">#</a></h3>
+<p>Espions de test autonome et mocks pour JavaScript.<br>
+Aucune dépendances, fonctionne avec n’importe quel framework JavaScript.<br>
+Un espion de test est une fonction qui enregistre les paramètres, retourne la valeur de <code>this</code> et l’exception levée - si présente.<br>
+Un espion de test peut être une fonction anonyme ou peut être encapsuler dans une autre fonction.</p>
+<pre class="language-js"><code class="language-js"><span class="token string">"test should call subscribers on publish"</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    <span class="token keyword">var</span> callback <span class="token operator">=</span> sinon<span class="token punctuation">.</span><span class="token function">spy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    PubSub<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"message"</span><span class="token punctuation">,</span> callback<span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>    PubSub<span class="token punctuation">.</span><span class="token function">publishSync</span><span class="token punctuation">(</span><span class="token string">"message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>    <span class="token function">assertTrue</span><span class="token punctuation">(</span>callback<span class="token punctuation">.</span>called<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<h3 id="should.js">should.js <a class="direct-link" href="#should.js">#</a></h3>
+<p>Enoncés (assertions) de style Behavior-Driven-Developemnt (BDD) pour Node.js, indépendant de tout framework de test.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> should <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'should'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token keyword">var</span> user <span class="token operator">=</span> <span class="token punctuation">{</span><br>    name<span class="token operator">:</span> <span class="token string">'tj'</span><br>  <span class="token punctuation">,</span> pets<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'tobi'</span><span class="token punctuation">,</span> <span class="token string">'loki'</span><span class="token punctuation">,</span> <span class="token string">'jane'</span><span class="token punctuation">,</span> <span class="token string">'bandit'</span><span class="token punctuation">]</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br>user<span class="token punctuation">.</span>should<span class="token punctuation">.</span>have<span class="token punctuation">.</span><span class="token function">property</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token string">'tj'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>user<span class="token punctuation">.</span>should<span class="token punctuation">.</span>have<span class="token punctuation">.</span><span class="token function">property</span><span class="token punctuation">(</span><span class="token string">'pets'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>with<span class="token punctuation">.</span><span class="token function">lengthOf</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// Si l'objet a été créé avec Object.create(null)</span><br><span class="token comment">// alors il n'hérite pas de `Object.prototype`, donc il n'aura pas une getter `.should`</span><br><span class="token comment">// donc tu peux faire :</span><br><span class="token function">should</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">.</span>have<span class="token punctuation">.</span><span class="token function">property</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token string">'tj'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// aussi, tu peux tester de cette manières les `null`</span><br><span class="token function">should</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">.</span>not<span class="token punctuation">.</span>be<span class="token punctuation">.</span>ok<span class="token punctuation">;</span><br><br><span class="token function">someAsyncTask</span><span class="token punctuation">(</span>foo<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span><span class="token punctuation">{</span><br>  should<span class="token punctuation">.</span>not<span class="token punctuation">.</span><span class="token function">exist</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span><br>  should<span class="token punctuation">.</span><span class="token function">exist</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span><br>  result<span class="token punctuation">.</span>bar<span class="token punctuation">.</span>should<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="expect.js">expect.js <a class="direct-link" href="#expect.js">#</a></h3>
+<p>Outils d’enoncés minimalistes de style BDD pour Node.JS et pour navigateurs, basé sur should.js</p>
+<ul>
+<li>Cross-browser : fonctionne sur IE6+, Firefox, Safari, Chrome, Opera.</li>
+<li>Compatible avec tous les frameworks de test.</li>
+<li>Prête pour Node.JS (require(‘expect.js’)).</li>
+<li>Autonome. Global seule sans extensions de prototype ou brique (shims)</li>
+</ul>
+<pre class="language-js"><code class="language-js"><span class="token function">expect</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>r<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">be</span><span class="token punctuation">(</span><span class="token keyword">undefined</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token function">expect</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token operator">:</span> <span class="token string">'b'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">eql</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token operator">:</span> <span class="token string">'b'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><br><span class="token function">expect</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>be<span class="token punctuation">.</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token string">'number'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token function">expect</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>be<span class="token punctuation">.</span><span class="token function">an</span><span class="token punctuation">(</span><span class="token string">'array'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token function">expect</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">.</span>not<span class="token punctuation">.</span>to<span class="token punctuation">.</span>be<span class="token punctuation">.</span><span class="token function">an</span><span class="token punctuation">(</span>Image<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="chai.js">chai.js <a class="direct-link" href="#chai.js">#</a></h3>
+<p><img src="/img/test-chai.png" alt="Chai" class="img100 float-left-20px"><br>
+Chai est une bibliothèque d’énoncés BDD / TDD pour node.js et les navigateurs qui peut être couplé à n’importe quel framework de test JavaScript</p>
+<h3 id="qunit">qUnit <a class="direct-link" href="#qunit">#</a></h3>
+<p>A venir.</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="http://fr.wikipedia.org/wiki/Test_Driven_Development">http://fr.wikipedia.org/wiki/Test_Driven_Development</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="http://fr.wikipedia.org/wiki/Behavior_Driven_Development">http://fr.wikipedia.org/wiki/Behavior_Driven_Development</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+
+<hr>
+<ul><li>Next: <a href="/posts/2015-01-08-introduction-au-test-unitaire-javascript/">Introduction au test unitaire JavaScript</a></li><li>Previous: <a href="/posts/2015-01-05-les-pours-et-contres-des-frameworks-js/">Les pours et contres des frameworks JS</a></li>
+</ul>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /posts/2015-01-05-sy-retrouver-dans-les-outils-de-test-javascript/ -->
+  </body>
+</html>

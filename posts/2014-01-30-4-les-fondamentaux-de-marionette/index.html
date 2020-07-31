@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les fondamentaux de Marionette</title>
+    <meta name="description" content="I share my knowledge about web development and christian faith.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Gorille gris">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Gorille gris">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Gorille gris</a></h1>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="/">posts</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about/">à propos</a>
+        </li>
+      </ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>Les fondamentaux de Marionette</h1>
+
+<p class="foreword">
+Tu as choisi de développer ta dernière super application web avec Backbone. 
+Marionette.js simplifie ton application en te fournissant du code robuste et en adressant certaines lacunes de Backbone.
+Voici les fondamentaux de Marionette pour te mettre le pied à l'étrier.
+</p>
+<!-- more -->
+<h2 id="pourquoi-marionette-%3F">Pourquoi Marionette ? <a class="direct-link" href="#pourquoi-marionette-%3F">#</a></h2>
+<p>Pourquoi utiliser Marionette ? Il est en effet tout à fait possible d’écrire ton application Backbone sans Marionette.<br>
+Cependant je t’invite à regarder d’un peu plus près la distribution du code dans Backbone afin de voir là où il peut exister de potentielles lacunes.</p>
+<p>Distribution du code dans Backbone :</p>
+<ul>
+<li>Données : <code>Model</code> (53% du code)</li>
+<li>Présentation : <code>Views</code> (9% du code)</li>
+<li>Architecture : le reste qui fait la jointure entre données et présentation (<code>Routes</code> etc…) (38% du code).</li>
+</ul>
+<p>A la vue de ces données, tu remarqueras que seulement 9% du code de Backbone est dédiée à la gestion des Views. C’est peu, mais caractéristique de Backbone.</p>
+<p>Je t’invite maintenant à regarder la distribution du code dans Marionette.</p>
+<ul>
+<li>Data : <code>Model</code> (0% du code)</li>
+<li>Présentation : <code>Views</code> (67% du code)</li>
+<li>Architecture : le reste (33% du code)</li>
+</ul>
+<p>Tu remarques que 67% du code de Marionette est dédiée à la presentation. Ainsi, Marionette a pour principale objectif de combler le manque de gestion des Vues dans Backbone.</p>
+<h2 id="probl%C3%A8me-avec-les-views-dans-backbone">Problème avec les Views dans Backbone <a class="direct-link" href="#probl%C3%A8me-avec-les-views-dans-backbone">#</a></h2>
+<p>Les problèmes concernant les Views les plus fréquents sont souvent les suivants :</p>
+<ul>
+<li>la gestion des vues imbriquées</li>
+<li>la collection de vues</li>
+<li>les évènements des vues</li>
+</ul>
+<p>Que propose donc Marionette ?</p>
+<h2 id="marionette-render">Marionette Render <a class="direct-link" href="#marionette-render">#</a></h2>
+<p>Marionette vient avec une nouvelle implémentation de <code>Render</code>.<br>
+Voici les différentes fonctionnalités du <code>Render</code> de Marionette.</p>
+<ol>
+<li>
+<p>Marionette Render sérialise model et collection (transforme en JSON)</p>
+<pre class="language-js"><code class="language-js">person<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'prenom'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">// >> 'Grégory'</span><br><br>view<span class="token punctuation">.</span><span class="token function">serializeData</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span><br><span class="token comment">// {</span><br><span class="token comment">//     prenom: 'Grégory'</span><br><span class="token comment">//     nom: 'PELLETEY'</span><br><span class="token comment">// }</span></code></pre>
+</li>
+<li>
+<p>Marionette Render te permet d’ajouter des datas à la vue avec le méthode <code>templateHelpers</code>. Comment ça marche :</p>
+<pre class="language-js"><code class="language-js"><span class="token class-name">MyView</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">templateHelpers</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><br>    <span class="token keyword">return</span> <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>model<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'prenom'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <br>             <span class="token keyword">this</span><span class="token punctuation">.</span>model<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'nom'</span><span class="token punctuation">)</span><br><span class="token punctuation">}</span><br><span class="token comment">// {</span><br><span class="token comment">//    prenom : 'Grégory'</span><br><span class="token comment">//    nom : 'PELLETEY'</span><br><span class="token comment">// }  </span></code></pre>
+</li>
+<li>
+<p>Compile le template si besoin</p>
+</li>
+<li>
+<p>Render le template</p>
+</li>
+<li>
+<p>Place le HTML dans l’élèment de la Vue.</p>
+</li>
+<li>
+<p>Retourne une instance de la Vue.</p>
+</li>
+</ol>
+<h2 id="marionette-events">Marionette Events <a class="direct-link" href="#marionette-events">#</a></h2>
+<p>Une pattern courante dans Backbone est un Vue qui veut écouter les évènements qui lui sont attachés.<br>
+A chaque fois que je <code>render</code> la Vue <code>MyView</code>, un appel à la méthode <code>onRender</code> est fait.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> MyView <span class="token operator">=</span> Backbone<span class="token punctuation">.</span>View<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    <span class="token function-variable function">initialize</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'render'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>onRender<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br>    <span class="token function-variable function">onRender</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'rendered!!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// j'appele la méthode render de la vue myView, le callback est déclenché</span><br>myView<span class="token punctuation">.</span><span class="token function">trigger</span><span class="token punctuation">(</span><span class="token string">'render'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
+<p>Avec Marionette, tu n’as plus à enregistrer l’évènement :</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> MyView <span class="token operator">=</span> Backbone<span class="token punctuation">.</span>View<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    <span class="token function-variable function">onRender</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'rendered!!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// j'appele la méthode render de la vue myView</span><br><span class="token comment">// et aussi le callback qui y est attaché</span><br>myView<span class="token punctuation">.</span><span class="token function">triggerMethod</span><span class="token punctuation">(</span><span class="token string">'render'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
+<h2 id="marionette-region">Marionette Region <a class="direct-link" href="#marionette-region">#</a></h2>
+<p>Une Region est un conteneur persistent pour un ensemble de child views. Ca te permet d’organiser ton code.</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> RootView <span class="token operator">=</span> Mn<span class="token punctuation">.</span>LayoutView<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    el<span class="token operator">:</span> <span class="token string">'body'</span><span class="token punctuation">,</span><br><br>    regions<span class="token operator">:</span> <span class="token punctuation">{</span><br>        sidebar <span class="token operator">:</span> <span class="token string">'.sidebar'</span><span class="token punctuation">,</span><br>        main <span class="token operator">:</span> <span class="token string">'main'</span><span class="token punctuation">,</span><br>        footer <span class="token operator">:</span> <span class="token string">'footer'</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// afficher une vie dans une partie de la Region</span><br>rootView<span class="token punctuation">.</span><span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token string">'main'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MainView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
+<p>Cas des Vues imbriquées</p>
+<pre class="language-js"><code class="language-js">rootView<span class="token punctuation">.</span><span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token string">'main'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MainView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token keyword">var</span> MainView <span class="token operator">=</span> Mn<span class="token punctuation">.</span>LayoutView<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    template<span class="token operator">:</span> mainViewTemplate<span class="token punctuation">,</span><br><br>    regions<span class="token operator">:</span> <span class="token punctuation">{</span><br>        title<span class="token operator">:</span> <span class="token string">'.title'</span><br>    <span class="token punctuation">}</span><span class="token punctuation">,</span><br><br>    <span class="token comment">// methode éxécutée avant que la Vue Main soit affichée</span><br>    <span class="token function-variable function">onBeforeShow</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getRegion</span><span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TitleView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="marionette-collectionview">Marionette CollectionView <a class="direct-link" href="#marionette-collectionview">#</a></h2>
+<p>CollectionView fourni un système de liaison de donnée dans un sens (1-way data binding) entre la collection et les vues.</p>
+<p>En Backbone, les collections permettent de faire plusieurs choses :</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> users <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UsersCollection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// créer une collection</span><br><br>users<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token comment">// connaître la taille d'une collection</span><br><br><span class="token comment">// extraire un model d'une collection</span><br><span class="token keyword">var</span> james <span class="token operator">=</span> users<span class="token punctuation">.</span><span class="token function">findWhere</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <br>    firstname<span class="token operator">:</span> <span class="token string">'james'</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Avec Marionette</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> UsersList <span class="token operator">=</span> Mn<span class="token punctuation">.</span>CollectionView<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    collection<span class="token operator">:</span> users<span class="token punctuation">,</span><br>    childView<span class="token operator">:</span> UserView <span class="token comment">// le type de vue que tu veux instancier pour chaque model de la vue !!</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br><span class="token comment">// j'affiche dans une Region ma Collection</span><br>myRegion<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">UsersList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <br><br><span class="token comment">// puisque c'est 1-way-binding</span><br><span class="token comment">// la vue va se mettre à jour automatiquement dans le navigateur</span><br>users<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>james<span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
+<h2 id="r%C3%A9sum%C3%A9-sur-les-views">Résumé sur les Views <a class="direct-link" href="#r%C3%A9sum%C3%A9-sur-les-views">#</a></h2>
+<p>Au niveau des Views dans Backbone+Marionette, il y a des bonnes choses et aussi des moins bonnes.</p>
+<p>Quelques bonnes choses sont :</p>
+<ul>
+<li>Tu ne te préoccupe pas du cablage des données;</li>
+<li>Tu ne te préoccupe pas de quand est-ce que tu dois afficher ta View.</li>
+</ul>
+<p>D’autres choses sont moins top :</p>
+<ul>
+<li>Maintenant il y 4 classes de View avec Marionette (Views, CollectionViews, LayoutViews etc…)</li>
+</ul>
+<h2 id="architecture">Architecture <a class="direct-link" href="#architecture">#</a></h2>
+<p>Marionette.Object est une classe de base. Par exemple si tu veux créer un objet qui n’est pas une View ni une Collection ni quoi que ce soit de prédéfini dans Backbone, tu peux l’utiliser car il s’intégrera mieux dans le framework (plusieurs objet Marionette proviennent de Marionette.Object)</p>
+<p>Backbone.Radio propose un système d’évènement plus robuste.</p>
+<h2 id="marionette-routers">Marionette Routers <a class="direct-link" href="#marionette-routers">#</a></h2>
+<h3 id="probl%C3%A8me-avec-le-router">Problème avec le Router <a class="direct-link" href="#probl%C3%A8me-avec-le-router">#</a></h3>
+<p>La philosophie de Backbone est que c’est le routage qui contrôle le flow de l’application. Une URI représente une action utilisateur.<br>
+Un click sur un bouton ou un lien doit avec son équivalence dans l’URL.<br>
+Ainsi cet exemple pose un “problème” car on est obligé de déclencher l’évènement au moment de la navigation :</p>
+<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Backbone<span class="token punctuation">.</span>Router</span><span class="token punctuation">(</span><span class="token punctuation">{</span><br>    routes <span class="token operator">:</span> <span class="token punctuation">{</span><br>        <span class="token string">'book/:id'</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token comment">// faire des trucs</span><br>        <span class="token punctuation">}</span><span class="token punctuation">,</span><br>        <span class="token string">'book/:bookId/chapter/:chapterId'</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><br>            <span class="token comment">// faire d'autres trucs</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>router<span class="token punctuation">.</span><span class="token function">navigate</span><span class="token punctuation">(</span><span class="token string">'book/3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// par défaut le callback spécifié dans le Router n'est pas exécuté</span><br>router<span class="token punctuation">.</span><span class="token function">navigate</span><span class="token punctuation">(</span><span class="token string">'book/3'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>trigger<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// déclenche le callback</span></code></pre>
+<h3 id="state-router">State Router <a class="direct-link" href="#state-router">#</a></h3>
+<p>Toutes les choses suivantes sont faisaible en Backbone mais ne sont pas parfaites.</p>
+<ul>
+<li>authentification / autorisation</li>
+<li>before / after callbacks</li>
+<li>redirections</li>
+<li>annulation</li>
+<li>routers imbriquées</li>
+<li>page 404</li>
+</ul>
+<p>Quelques solutions proposées par Marionette :</p>
+<ul>
+<li>un objet peut être associé à une Route</li>
+<li>un objet possède deux rôle principales :<br>
+1.  Récupérer les données<br>
+2.  Montrer les Vues</li>
+<li>faciliter l’ajout de nouvelles actions à l’objet</li>
+<li>une action est exécutée à chaque changement d’URI</li>
+</ul>
+<p>Cette ensemble est nommé le State Router.</p>
+<h3 id="base-router">Base Router <a class="direct-link" href="#base-router">#</a></h3>
+<p>Que faire si le State Router ne te convient pas ?</p>
+<p>Marionette propose un Base Router. De base, Backbone fait des choix sur la manière de gérer les URIs. Par exemple, pour une Route donnée, une seule méthode va être appelée. Backbone Router analyse aussi les paramètres de la requête HTTP.</p>
+<p>Le Base Router de Marionette s’affranchi des ces choix là.</p>
+<h2 id="conclusion">Conclusion <a class="direct-link" href="#conclusion">#</a></h2>
+<p>Pourquoi s’intéresser à Marionette ?<br>
+Marionette est en actif développement et possède une vision pour l’avenir. L’équipe principale est assez conséquente ainsi que la communauté. Marionette te facilite le développement Backbone ajoutant des fonctionnalités utiles pour structurer le code, surtout au niveau des Views.</p>
+<p class="disclaimer">
+    Article écrit à partir de la vidéo <a href="https://www.youtube.com/watch?v=EvQnntaqVdE">Marionette - The Backbone Framework</a>.<br/>
+    Une application Backbone + Marionette est disponible sur mon <a href="https://ptitgraig.github.com/first-steps-backbone-Marionette">GitHub</a> pour référence, qui utilise les principes fondamentaux présentés dans cet article.
+</p>
+
+<hr>
+<ul><li>Next: <a href="/posts/2014-02-05-memento-backbone-dot-js/">Memento Backbone.js</a></li><li>Previous: <a href="/posts/2013-10-10-une-juste-image-de-dieu/">Une juste image de Dieu</a></li>
+</ul>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /posts/2014-01-30-4-les-fondamentaux-de-marionette/ -->
+  </body>
+</html>

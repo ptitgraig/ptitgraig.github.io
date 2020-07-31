@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La base de Spring MVC</title>
+    <meta name="description" content="I share my knowledge about web development and christian faith.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Gorille gris">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Gorille gris">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Gorille gris</a></h1>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="/">posts</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about/">à propos</a>
+        </li>
+      </ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>La base de Spring MVC</h1>
+
+<p class="foreword">
+Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d'un développeur JavaScript.
+</p>
+<h2 id="fonctionnement">Fonctionnement <a class="direct-link" href="#fonctionnement">#</a></h2>
+<p>Le framework Spring Web MVC est conçu autour d’une DispatcherServlet qui gère toutes les requêtes et réponses HTTP. Illustration ci-dessous :</p>
+<p><img src="/img/spring_dispatcherservlet.png" alt="Schéma démontrant le DispatcherServlet"></p>
+<ol>
+<li>
+<p>Après avoir reçu une requête HTTP, DispatchServlet consulte le HandlerMapping pour appeler le Controller approprié.</p>
+</li>
+<li>
+<p>Le Controller analyse la requête et apelle le la méthode du service appropriée, basé l’utilisation des méthodes POST ou GET. La méthode du service initialisera les données du model sur la base d’une logique business puis retournera ne nom de la vue à la DispatcherServlet</p>
+</li>
+<li>
+<p>La DispatcherServlet s’appuiera sur la ViewResolver pour choisir la bonne vue pour la requête</p>
+</li>
+<li>
+<p>Une fois que la vue est finalisée, la DispatcherServlet passe les données du model à la vue, cette dernière étant finalement affichée sur le navigateur.</p>
+</li>
+</ol>
+<p>Tous les composants mentionnés ci-dessus (HandlerMapping, Controller et ViewResolver) font partis du WebApplicationContext, lequel est une extention du ApplicationContext auquel on a ajouté quelques caractéristiques supplémentaires pour les applications web.</p>
+
+
+<hr>
+<ul><li>Next: <a href="/posts/2015-01-05-les-pours-et-contres-des-frameworks-js/">Les pours et contres des frameworks JS</a></li><li>Previous: <a href="/posts/2014-06-18-comment-bien-calculer-le-poids-dun-selecteur-css/">Comment bien calculer le poids d&#39;un selecteur CSS</a></li>
+</ul>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /posts/2015-01-05-la-base-de-spring-mvc/ -->
+  </body>
+</html>

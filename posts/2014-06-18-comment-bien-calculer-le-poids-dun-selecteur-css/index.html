@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment bien calculer le poids d&#39;un selecteur CSS</title>
+    <meta name="description" content="I share my knowledge about web development and christian faith.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Gorille gris">
+    <link rel="alternate" href="/feed/feed.json" type="application/json" title="Gorille gris">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">Gorille gris</a></h1>
+      <ul class="nav">
+        <li class="nav-item">
+          <a href="/">posts</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about/">à propos</a>
+        </li>
+      </ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>Comment bien calculer le poids d&#39;un selecteur CSS</h1>
+
+<p class="foreword">
+Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s'applique à quel élément et pourquoi un style s'applique plutôt qu'un autre.
+</p>
+<p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
+<pre class="language-css"><code class="language-css"><span class="token selector">.container .info.test .spanner .wrapper .block div.pictos #jailanausee</span> <span class="token punctuation">{</span> <span class="token property">color</span> <span class="token punctuation">:</span> #000<span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>
+<p>Pour éviter je genre de massacre, il est d’une extrème importance de comprendre quel style va s’appliquer à quel élement, et dans quel ordre.<br>
+Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le combat et s’appliquer au span. Quelle va être la couleur du texte du span : rouge, bleu, vert ou jaune ?</p>
+<pre class="language-css"><code class="language-css"><span class="token selector">#idSpan</span> <span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span> <span class="token punctuation">}</span><br><span class="token selector">span.class-span</span> <span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> orange<span class="token punctuation">;</span> <span class="token punctuation">}</span><br><span class="token selector">.bloc.info span</span> <span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> yellow<span class="token punctuation">;</span> <span class="token punctuation">}</span><br><span class="token selector">.container .bloc.info .class-txt span.class-span</span> <span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span> <span class="token punctuation">}</span><br><span class="token selector">span</span> <span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> blue <span class="token important">!important</span> <span class="token punctuation">}</span></code></pre>
+<pre class="language-css"><code class="language-css">&lt;div class=<span class="token string">"container"</span>><br>	&lt;div class=<span class="token string">"block info"</span>><br>		&lt;span class=<span class="token string">"class-span"</span> id=<span class="token string">"idSpan"</span> style=<span class="token string">"color:purple;"</span>><br>			je suis d'une certaine couleur<br>		&lt;/span><br>	&lt;/div><br>&lt;/div></code></pre>
+<p>La réponse est bleu ! <a href="http://jsfiddle.net/ptitgraig/L8CUS/2/">La preuve ici</a>.</p>
+<p>Voici un court explicatif de l’ordre d’application des styles sur le span.</p>
+<table>
+	</tr>
+		<td>
+			!important
+		</td>
+		<td>
+			attribut style (style="")
+		</td>
+		<td>
+			nombre d'id (#)
+		</td>
+		<td>
+			nombre de classes (.)
+		</td>
+		<td>
+			nombre de balises
+		</td>
+	</tr>
+	<tr>
+		<td>
+			gagne sur tous les autres style, même seul
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+	</tr>
+</table>
+<p>Au final, vous vous trouvez avec un chiffre entre 0 et 19999. Reprenons notre exemple de départ. Sachant que l’attribut style s’applique toujours et annule les autres, nous allons nous en affranchir pour l’exemple.</p>
+<table>
+	<tr>
+		<th>Déclaration CSS</th>
+		<th>`!important`</th>
+		<th>nombre d'id (#)</th>
+		<th>nombre de classes (.)</th>
+		<th>nombre de balises</th>
+		<th>poids</th>
+	</tr>
+	<tr>
+		<td>#idSpan</td>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0100</td>
+	</tr>
+	<tr>
+		<td>span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+		<td>0011</td>
+	</tr>
+	<tr>
+		<td>.bloc.info span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>2</td>
+		<td>1</td>
+		<td>0021</td>
+	</tr>
+	<tr>
+		<td>.container .bloc.info .class-txt span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>5</td>
+		<td>1</td>
+		<td>0051</td>
+	</tr>
+	<tr>
+		<td>span (avec !important)</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1001</td>
+	</tr>
+</table>
+<p>Au final vous voyez l’ordre d’importance se déssiner :</p>
+<ol>
+<li><code>span</code> (avec !important) /* 1001 */</li>
+<li><code>\#idSpan</code> /* 0100 */</li>
+<li><code>.container .bloc.info .class-txt span.class-span</code> /* 0051 */</li>
+<li><code>.bloc.info span</code> /* 0021 */</li>
+<li><code>span.class-span</code> /* 0011 */</li>
+</ol>
+<p>1001 &gt; 100 &gt; 51 &gt; 21 &gt; 11</p>
+
+
+<hr>
+<ul><li>Next: <a href="/posts/2015-01-05-la-base-de-spring-mvc/">La base de Spring MVC</a></li><li>Previous: <a href="/posts/2014-02-05-memento-backbone-dot-js/">Memento Backbone.js</a></li>
+</ul>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /posts/2014-06-18-comment-bien-calculer-le-poids-dun-selecteur-css/ -->
+  </body>
+</html>
